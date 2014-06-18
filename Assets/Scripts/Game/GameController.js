@@ -12,15 +12,9 @@ private var gameOver : boolean;
 private var restart : boolean;
 private var score : int;
 private var highScoreLeaderboard : HighScoreLeaderboard;
-private var pauseGame : PauseGame;
 
 function Start () {
-	var pauseGameObject : GameObject = GameObject.FindGameObjectWithTag("PauseText");
-	if (pauseGameObject != null)
-		pauseGame = pauseGameObject.GetComponent(PauseGame);
-	if (pauseGame == null)
-		Debug.Log ("Cannot find 'PauseGame' script");
-
+	Debug.Log("Starting game");
 	highScoreLeaderboard = GetComponent(HighScoreLeaderboard);
 	if (highScoreLeaderboard == null) Debug.Log ("Cannot find 'HighScoreLeaderboard' script");
 	gameOver = false;
@@ -28,6 +22,7 @@ function Start () {
 	score = 0;
 	UpdateScore();
     SpawnWaves ();
+    Debug.Log("GameController started");
 }
 
 function Update(){
@@ -85,9 +80,18 @@ function IsGameOver (){
 }
 function GameOver (){
 	PlayerPrefs.SetInt("Final Score", score);
-	gameOver = true;
-	if (highScoreLeaderboard != null){ 
-		Debug.Log("Request to post high score: "+score);
-		highScoreLeaderboard.PostHighScore(score);
+	if (PlayerPrefs.HasKey("High score")){
+		var highScore : int = PlayerPrefs.GetInt("High score");
+	} else {
+		PlayerPrefs.SetInt("High score", score);
+		highScore = score;
+		var post : boolean = true;
+	} if (score > highScore || post){
+		if (highScoreLeaderboard != null){ 
+			highScoreLeaderboard.PostHighScore(score);
+			// TODO Check if the Highscore has been submitted, if not
+			PlayerPrefs.SetInt("High score", score);
+		}
 	}
+	gameOver = true;
 }

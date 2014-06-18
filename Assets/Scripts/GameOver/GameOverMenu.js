@@ -1,11 +1,12 @@
 ﻿#pragma strict
 
 private var highScoreLeaderboard : HighScoreLeaderboard;
-private var tap : boolean = true;
+private var tap : boolean;
 var restartCollider : Collider;
 var highscoresCollider: Collider;
 
 function Start () {
+	tap = true;
 	highScoreLeaderboard = GetComponent(HighScoreLeaderboard);
 	if (highScoreLeaderboard == null) Debug.Log ("Cannot find 'HighScoreLeaderboard' script");
 }

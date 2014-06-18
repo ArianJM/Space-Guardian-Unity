@@ -1,9 +1,11 @@
 ﻿#pragma strict
 
-private var tap : boolean = true;
-private var paused : boolean = false;
+private var tap : boolean;
+private var paused : boolean;
 
 function Start () : void {
+	tap = true;
+	paused = false;
 	PlayerPrefs.SetInt("Pause", 0);
 }
 
@@ -36,6 +38,5 @@ function IsPaused () : boolean {
 			}
 		}
 	}
-	if (paused) Debug.Log("Paused");
 	return paused;
 }

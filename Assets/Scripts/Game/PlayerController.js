@@ -32,12 +32,10 @@ function Start() {
 	if (scale.x >= scale.z) scale = new Vector3 (scale.x, scale.x, scale.x);
 	else scale = new Vector3 (scale.z, scale.z, scale.z);
 	scale = scale/5;
-	Debug.Log("Ship scale: " + scale);
 	transform.localScale = scale;
 	//Move to the correct starting place
 	var position : Vector3 = Camera.main.ViewportToWorldPoint(new Vector3(0.5f,0.2f,0.5f));
 	position.y = 0.0f;
-	Debug.Log("Start Ship position: " + position);
 	transform.position = position;
 
 	initShipBoundary();
@@ -59,7 +57,6 @@ function initShipBoundary(){
 	boundary.zMin -= boundary.zMin/4 -2;	//-2 to center, camera is not in (0,0,0)
 	boundary.zMax = scale.z/2;
 	boundary.zMax -= boundary.zMax/4 -2;
-	Debug.Log("Ship boundary: " + boundary.xMin+" "+boundary.xMax+" "+boundary.zMin+" "+boundary.zMax);
 }
 
 var speed : float;
