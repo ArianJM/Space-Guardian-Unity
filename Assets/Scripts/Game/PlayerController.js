@@ -11,14 +11,19 @@ var shot : GameObject;
 var shotSpawn : Transform;
 var fireRate : float;
 private var nextFire : float;
+private var pixelHeight : int;
+private var shipMoveMargin : int;
 
 function Update() {
+	if (PlayerPrefs.GetInt("Pause") == 1) return;
 	if (Input.touchCount > 0 && Time.time > nextFire){
 		nextFire = Time.time + fireRate;
 		Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
 	}
 }
 function Start() {
+	 pixelHeight = Mathf.RoundToInt(Camera.main.pixelHeight*0.075);
+	 shipMoveMargin = Mathf.RoundToInt(Camera.main.pixelHeight*0.015);
 	//Scale to a size relative to the screen
 	var scale : Vector3 = (Camera.main.ViewportToWorldPoint(Vector3.one)
 						- Camera.main.ViewportToWorldPoint(Vector3.zero));
@@ -63,26 +68,29 @@ private var previousTilt : float = 0.0f;
 var tiltIncrement : float;
 
 function FixedUpdate () {
+	if (PlayerPrefs.GetInt("Pause") == 1){
+		rigidbody.velocity = Vector3.zero;
+		return;
+	}
 	if (Input.touchCount > 0) {
 		var moveTouch : Touch = Input.GetTouch(0);
 		var moveHorizontal : float = moveTouch.position.x;
-		var moveVertical : float = moveTouch.position.y;
+		var moveVertical : float = moveTouch.position.y+pixelHeight;
 		var shipInScreen : Vector3 = Camera.main.WorldToScreenPoint(transform.position);
 
 		var vecX : float = moveHorizontal - shipInScreen.x;
 		var vecY : float = moveVertical - shipInScreen.y;
 		var total : float = Mathf.Abs(vecX) + Mathf.Abs(vecY);
-		if (Mathf.Abs(vecX) < 5){
+		if (Mathf.Abs(vecX) < shipMoveMargin){
 			vecX = 0.0f;
 			total -= Mathf.Abs(vecX);
 		} else vecX = vecX/total;
-		if (Mathf.Abs(vecY) < 5){
+		if (Mathf.Abs(vecY) < shipMoveMargin){
 			vecY = 0.0f;
 			total -= Mathf.Abs(vecY);
 		} else vecY = vecY/total;
 
 		var movement : Vector3 = new Vector3(vecX, 0.0f, vecY);
-		Debug.Log(movement);
 		movement *= speed;
 		rigidbody.velocity = movement;
 		rigidbody.position = new Vector3 (
@@ -99,8 +107,6 @@ function FixedUpdate () {
    		if (previousTilt > 0) previousTilt -= tiltIncrement;
    		else if (previousTilt < 0) previousTilt += tiltIncrement;
    	}
-   	
-   	Debug.Log(previousTilt);
    	rigidbody.rotation = Quaternion.Euler (0.0f, 180.0f, previousTilt);
 	if (Input.touchCount == 0) rigidbody.velocity = Vector3.zero;
 }

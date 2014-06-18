@@ -2,8 +2,8 @@
 
 var explosion : GameObject;
 var playerExplosion : GameObject;
-var scoreValue : int;
-
+var destroyValue : int;
+var avoidValue : int;
 private var gameController : GameController;
 
 function Start() {
@@ -21,13 +21,13 @@ function OnTriggerEnter(other : Collider){
 		Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
 		gameController.GameOver();
 	}
-	else gameController.AddScore(scoreValue);
+	else gameController.AddScore(destroyValue);
 	Destroy(other.gameObject);
 	Destroy(gameObject);
 }
 
 function OnTriggerExit(other : Collider){
 	if(other.tag == "Boundary" && !gameController.IsGameOver()){
-		gameController.AddScore(scoreValue/2);
+		gameController.AddScore(avoidValue);
 	}
 }

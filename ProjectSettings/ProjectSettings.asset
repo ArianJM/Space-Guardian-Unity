@@ -25,7 +25,7 @@ PlayerSettings:
   m_MobileMTRendering: 0
   m_UseDX11: 0
   iosShowActivityIndicatorOnLoading: -1
-  androidShowActivityIndicatorOnLoading: -1
+  androidShowActivityIndicatorOnLoading: 2
   displayResolutionDialog: 1
   allowedAutorotateToPortrait: 1
   allowedAutorotateToPortraitUpsideDown: 0
@@ -114,6 +114,18 @@ PlayerSettings:
     m_Icons:
     - m_Icon: {fileID: 0}
       m_Size: 128
+  - m_BuildTarget: Android
+    m_Icons:
+    - m_Icon: {fileID: 2800000, guid: 1e2202b0babffba4c802a5493daa035f, type: 3}
+      m_Size: 144
+    - m_Icon: {fileID: 2800000, guid: 960d466181090f74fb19e2baa8f18bcc, type: 3}
+      m_Size: 96
+    - m_Icon: {fileID: 2800000, guid: 6656eee93bf13354f8a47e4e80f31bca, type: 3}
+      m_Size: 72
+    - m_Icon: {fileID: 2800000, guid: a2aa93ff6be38b045a4e62c9a92a68cb, type: 3}
+      m_Size: 48
+    - m_Icon: {fileID: 2800000, guid: f1d2d2805bfe1bf499b20911136edd96, type: 3}
+      m_Size: 36
   m_BuildTargetBatching:
   - m_BuildTarget: Android
     m_StaticBatching: 1

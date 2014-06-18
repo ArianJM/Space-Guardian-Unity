@@ -4,6 +4,10 @@
 TagManager:
   tags:
   - Boundary
+  - PlayText
+  - PauseText
+  - Asteroid
+  - Beam
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
