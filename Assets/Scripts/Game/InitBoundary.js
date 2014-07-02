@@ -4,7 +4,7 @@ function Start () {
 	//Boundary scale relative to screen
 	var scale : Vector3 = (Camera.main.ViewportToWorldPoint(Vector3.one)
 						- Camera.main.ViewportToWorldPoint(Vector3.zero));
-	scale.x = Mathf.Abs(scale.x);
+	scale.x = Mathf.Abs(scale.x*3);
 	scale.z = Mathf.Abs(scale.z);
 	scale.y = 1.0f;
 	//Debug.Log("Boundary scale: " + scale);

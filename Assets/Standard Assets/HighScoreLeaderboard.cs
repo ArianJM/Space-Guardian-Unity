@@ -1,5 +1,4 @@
 ﻿using GooglePlayGames;
-using UnityEngine.SocialPlatforms;
 using UnityEngine;
 using System.Collections;
 

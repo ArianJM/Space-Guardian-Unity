@@ -364,6 +364,7 @@ GameObject:
   - 114: {fileID: 135237157}
   - 114: {fileID: 135237154}
   - 82: {fileID: 135237156}
+  - 114: {fileID: 135237158}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: GameController
@@ -382,7 +383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f293f888fdc7241a19ac9fff1aac5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hazard: {fileID: 100014, guid: b5d659de5b6dc94409081ccb699010c5, type: 2}
+  astBasic: {fileID: 100014, guid: 08ea9b47e53cee644bc760cb21b9a901, type: 2}
+  astDiv: {fileID: 100004, guid: 7b069580cba5baa4f9a4ee25b6cb9448, type: 2}
   hazardCount: 10
   spawnWait: .5
   startWait: 1
@@ -395,7 +397,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 135237153}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -466,6 +468,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d445149b8ba25e4fb00697f3947049f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &135237158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135237153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa284cdd6c08744e9c12c587b4bcd61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &236377392
@@ -807,7 +820,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 687049784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -.5}
+  m_LocalPosition: {x: 0, y: 0, z: -.400000006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2090445805}
@@ -1660,5 +1673,5 @@ MonoBehaviour:
     zMin: 0
     zMax: 0
   speed: 5
-  tilt: 30
+  tilt: 35
   tiltIncrement: 2

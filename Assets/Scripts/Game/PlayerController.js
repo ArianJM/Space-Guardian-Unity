@@ -100,6 +100,8 @@ function FixedUpdate () {
 	   	else if (vecX > 0 && previousTilt < tilt) previousTilt += tiltIncrement;
 	   	else if (vecX < 0 && previousTilt > 0) previousTilt = 0.0f;
 	   	else if (vecX < 0 && previousTilt > -tilt) previousTilt -= tiltIncrement;
+	   	else if (vecX == 0 && previousTilt > 0) previousTilt -= tiltIncrement/2;
+	   	else if (vecX == 0 && previousTilt < 0) previousTilt += tiltIncrement/2;
    	} else {
    		if (previousTilt > 0) previousTilt -= tiltIncrement;
    		else if (previousTilt < 0) previousTilt += tiltIncrement;

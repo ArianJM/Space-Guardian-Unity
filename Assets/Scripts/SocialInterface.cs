@@ -15,17 +15,15 @@ public class SocialInterface : MonoBehaviour {
 			Social.localUser.Authenticate((bool success) => {
 				if (success){
 					Debug.Log("Authentication successful");
-					string userInfo = "Username: " + Social.localUser.userName +
+					PlayerPrefs.SetInt("Logged", 1);
+					/*string userInfo = "Username: " + Social.localUser.userName +
 						"\nUser ID: " + Social.localUser.id +
-						"\nIs under age: " + Social.localUser.underage;
-					Debug.Log(userInfo);
-				}else Debug.Log("Authentication failed");
+						"\nIs under age: " + Social.localUser.underage;*/
+				} else {
+					Debug.Log("Authentication failed");
+					PlayerPrefs.SetInt("Logged", 0);
+				}
 			});
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }

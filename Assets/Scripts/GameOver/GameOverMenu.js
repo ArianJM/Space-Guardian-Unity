@@ -1,14 +1,18 @@
 ﻿#pragma strict
 
 private var highScoreLeaderboard : HighScoreLeaderboard;
+private var achievements : Achievements;
 private var tap : boolean;
 var restartCollider : Collider;
-var highscoresCollider: Collider;
+var highscoresCollider : Collider;
+var achievementsCollider : Collider;
 
 function Start () {
 	tap = true;
 	highScoreLeaderboard = GetComponent(HighScoreLeaderboard);
 	if (highScoreLeaderboard == null) Debug.Log ("Cannot find 'HighScoreLeaderboard' script");
+	achievements = GetComponent (Achievements);
+	if (achievements == null) Debug.Log ("Cannot find 'Achievements' script");
 }
 
 function Update() {
@@ -25,6 +29,9 @@ function Update() {
 			} else if (tap && highscoresCollider.Raycast(cursorRay, hit, 50.0f)) {
 				if (highScoreLeaderboard != null)
 					highScoreLeaderboard.ShowLeaderboard();
+			} else if (tap && achievementsCollider.Raycast (cursorRay, hit, 50.0f)) {
+				if (achievements != null)
+					achievements.ShowAchievements ();
 			}
 			tap = true;
 		}
