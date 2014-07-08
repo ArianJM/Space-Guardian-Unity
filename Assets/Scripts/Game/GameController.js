@@ -2,6 +2,7 @@
 
 var astBasic : GameObject;
 var astDiv : GameObject;
+var fasteroid : GameObject;
 var hazardCount : int;	// Not counting divided asteroids
 var spawnWait : float;
 var startWait : float;
@@ -16,6 +17,7 @@ private var score : int = 0;
 private var asteroidsDestroyed : int = 0;
 private var highScoreLeaderboard : HighScoreLeaderboard;
 private var achievements : Achievements;
+private var proportion : float;
 
 function Start () {
 	Debug.Log("Starting game");
@@ -23,15 +25,19 @@ function Start () {
 	achievements = GetComponent(Achievements);
 	if (highScoreLeaderboard == null) Debug.Log ("Cannot find 'HighScoreLeaderboard' script");
 	
+	proportion = Camera.main.pixelHeight/Camera.main.pixelWidth;
+	
 	UpdateScore();
     SpawnWave ();
     Debug.Log("GameController started");
 }
 function Update(){
+	if (gameOver) StartCoroutine("FinishGame");
 	if (restart) Application.LoadLevel("gameOver");
 }
 
 private var type2Positions : Array = new Array ();
+private var type3Positions : Array = new Array ();
 function SpawnWave () {
 	if (gameOver) {
 		restart = true;
@@ -39,13 +45,23 @@ function SpawnWave () {
 	}
 	asteroidsInWave = 0;
 	var lvl : int = Mathf.Floor((score+50)/50);
+	Debug.Log("Nivel: "+lvl);
 	type2Positions.Clear();
-	for (var j : int = 1 ; j < lvl ; j++) type2Positions.Push(Mathf.Floor(Random.Range(0.0f, 5.99f)));
-	if (type2Positions.length > 0) {
+	type3Positions.Clear();
+	for (var j : int = 1 ; j < lvl ; j++)
+		type2Positions.Push(Mathf.Floor(Random.Range(0.0f, 5.99f)));
+	for (var k : int = 1 ; k < Mathf.Floor(lvl/5.0) ; k++)
+		type3Positions.Push(Mathf.Floor(Random.Range(2.0f, 7.99f)));
+
+	if (type2Positions.length > 1) {
 		type2Positions.Sort();
-		Debug.Log("Posiciones ordenadas: " + type2Positions);
 		var nextType2Pos = type2Positions.Shift();
 	}
+	if (type3Positions.length > 0) {
+		type3Positions.Sort();
+		var nextType3Pos = type3Positions.Shift();
+	}
+	if (lvl % 10 == 0) hazardCount = 10 + Mathf.Floor (lvl/10.0);
 	for (var i : int = 0 ; i < hazardCount ; i++) {
 		var randX = Random.Range(0.1f, 0.9f);
 		var vecPos = new Vector3(randX, 1.1f+i/5f, 1.0f);
@@ -56,17 +72,22 @@ function SpawnWave () {
 	    	Instantiate (astDiv, spawnPosition, spawnRotation);
 	    	lvl = lvl - 1;
 	    	asteroidsInWave += 3;
-	    	if (type2Positions.length > 0) {
-	    		Debug.Log("Posiciones que quedan: " + type2Positions);
-				nextType2Pos = type2Positions.Shift();
-			}
+	    	while (nextType2Pos == i && type2Positions.length > 0)
+	    		nextType2Pos = type2Positions.Shift();
 	    } else {
 	    	Instantiate (astBasic, spawnPosition, spawnRotation);
 	    	asteroidsInWave += 1;
 	    }
+	    if (lvl >= 0 && i == nextType3Pos) {
+	    	spawnRotation = Quaternion.Euler( Vector3(0, 300, 0));
+	    	spawnPosition = Vector3(-proportion * i, 0.0f, i+4);
+	    	Instantiate (fasteroid, spawnPosition, spawnRotation);
+	    	asteroidsInWave += 1;
+	    	while (nextType3Pos == i && type3Positions.length > 0)
+	    		nextType3Pos = type3Positions.Shift();
+	    } 
 	}
 }
-
 
 public function AddScore (addScore : int){
 	score += addScore;
@@ -105,6 +126,16 @@ function GameOver (){
 		}
 	}
 	gameOver = true;
+}
+
+private var finishing : boolean = false;
+function FinishGame () {
+	if (!finishing) {
+		Debug.Log("Finish it!");
+		finishing = true;
+		yield WaitForSeconds (3);
+		Application.LoadLevel("gameOver");
+	}
 }
 
 function UnlockAchievements () {

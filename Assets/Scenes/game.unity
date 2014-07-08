@@ -385,6 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   astBasic: {fileID: 100014, guid: 08ea9b47e53cee644bc760cb21b9a901, type: 2}
   astDiv: {fileID: 100004, guid: 7b069580cba5baa4f9a4ee25b6cb9448, type: 2}
+  fasteroid: {fileID: 100002, guid: 3c1fad244d68ecd42be7d67d7c459ce6, type: 2}
   hazardCount: 10
   spawnWait: .5
   startWait: 1
@@ -397,7 +398,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 135237153}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

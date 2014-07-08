@@ -53,8 +53,11 @@ function HazardPass (destroyed : boolean) {
 			case 2:
 				gameController.PassedHazard(destroyed, 3);
 				break;
+			case 3:
+				gameController.PassedHazard(destroyed, 1);
+				break;
 			default:
-				Debug.Log("Error in HazardPass (DestroyByContact.js), asteroid type not recognized");
+				Debug.Log("Error in HazardPass (DestroyByContact.js), asteroid type "+type+" not recognized");
 				break;
 		}
 	}
