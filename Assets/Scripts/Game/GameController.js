@@ -45,13 +45,14 @@ function SpawnWave () {
 	}
 	asteroidsInWave = 0;
 	var lvl : int = Mathf.Floor((score+50)/50);
-	Debug.Log("Nivel: "+lvl);
+	hazardCount = 10 + Mathf.Floor (lvl/10.0);
+	Debug.Log("hazard: "+hazardCount+" lvl: "+lvl);
 	type2Positions.Clear();
 	type3Positions.Clear();
-	for (var j : int = 1 ; j < lvl ; j++)
-		type2Positions.Push(Mathf.Floor(Random.Range(0.0f, 5.99f)));
-	for (var k : int = 1 ; k < Mathf.Floor(lvl/5.0) ; k++)
-		type3Positions.Push(Mathf.Floor(Random.Range(2.0f, 7.99f)));
+	for (var j : int = 1 ; j < Mathf.Floor(hazardCount/2.0) && lvl > 2 ; j++)
+		type2Positions.Push(Mathf.Floor(Random.Range(0.0f, hazardCount*0.3)));
+	for (var k : int = 1 ; k < Mathf.Floor(hazardCount/5.0) && lvl > 10 ; k++)
+		type3Positions.Push(Mathf.Floor(Random.Range(2.0f, hazardCount*0.7)));
 
 	if (type2Positions.length > 1) {
 		type2Positions.Sort();
@@ -61,7 +62,8 @@ function SpawnWave () {
 		type3Positions.Sort();
 		var nextType3Pos = type3Positions.Shift();
 	}
-	if (lvl % 10 == 0) hazardCount = 10 + Mathf.Floor (lvl/10.0);
+	
+	
 	for (var i : int = 0 ; i < hazardCount ; i++) {
 		var randX = Random.Range(0.1f, 0.9f);
 		var vecPos = new Vector3(randX, 1.1f+i/5f, 1.0f);
@@ -79,8 +81,13 @@ function SpawnWave () {
 	    	asteroidsInWave += 1;
 	    }
 	    if (lvl >= 0 && i == nextType3Pos) {
-	    	spawnRotation = Quaternion.Euler( Vector3(0, 300, 0));
-	    	spawnPosition = Vector3(-proportion * i, 0.0f, i+4);
+	    	if (Random.value >= 0.5) {
+	    		spawnRotation = Quaternion.Euler( Vector3(0, 300, 0));
+	    		spawnPosition = Vector3(-proportion * i, 0.0f, i+4);
+	    	} else {
+	    		spawnRotation = Quaternion.Euler( Vector3(0, 60, 0));
+	    		spawnPosition = Vector3(proportion * i, 0.0, i+4);
+	    	}
 	    	Instantiate (fasteroid, spawnPosition, spawnRotation);
 	    	asteroidsInWave += 1;
 	    	while (nextType3Pos == i && type3Positions.length > 0)
@@ -97,7 +104,7 @@ public function PassedHazard (destroyed : boolean, countsAs : int) {
 	if (destroyed) asteroidsDestroyed += 1;
 	passedHazards += countsAs;
 	if (passedHazards >= asteroidsInWave) {
-		Debug.Log (passedHazards+"/"+asteroidsInWave);
+		//Debug.Log (passedHazards+"/"+asteroidsInWave);
 		passedHazards = 0;
 		SpawnWave ();
 	}

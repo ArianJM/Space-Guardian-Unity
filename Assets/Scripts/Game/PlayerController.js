@@ -10,6 +10,7 @@ class Boundary{
 var shot : GameObject;
 var shotSpawn : Transform;
 var fireRate : float;
+private var speed : float;
 private var nextFire : float;
 private var pixelHeight : int;
 private var shipMoveMargin : int;
@@ -37,6 +38,11 @@ function Start() {
 	var position : Vector3 = Camera.main.ViewportToWorldPoint(new Vector3(0.5f,0.2f,0.5f));
 	position.y = 0.0f;
 	transform.position = position;
+	
+	var speedFromSize1 : Vector3 = Camera.main.ViewportToWorldPoint(new Vector3(0.0f, 0.0f, 0.0f));
+	var speedFromSize2 : Vector3 = Camera.main.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, 1.0f));
+	speed = Mathf.Abs(speedFromSize1.x) + Mathf.Abs(speedFromSize2.x);
+	Debug.Log(speed);
 
 	initShipBoundary();
 }
@@ -59,7 +65,6 @@ function initShipBoundary(){
 	boundary.zMax -= boundary.zMax/4 -2;
 }
 
-var speed : float;
 var tilt : float;
 private var previousTilt : float = 0.0f;
 var tiltIncrement : float;
