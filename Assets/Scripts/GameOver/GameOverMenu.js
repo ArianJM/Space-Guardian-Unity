@@ -2,38 +2,37 @@
 
 private var highScoreLeaderboard : HighScoreLeaderboard;
 private var achievements : Achievements;
-private var tap : boolean;
-var restartCollider : Collider;
-var highscoresCollider : Collider;
-var achievementsCollider : Collider;
+private var w : float = Screen.width/5;
+private var h : float = Screen.height/5;
+private var score : int;
+
+var scoreText : GUIText;
+var achievementsIcon : Texture2D;
+var leaderboardsIcon : Texture2D;
+var creditsIcon : Texture2D;
+var restartIcon : Texture2D;
 
 function Start () {
-	tap = true;
+	score = PlayerPrefs.GetInt("Final Score");
+	scoreText.text = "Score: " + score;
 	highScoreLeaderboard = GetComponent(HighScoreLeaderboard);
 	if (highScoreLeaderboard == null) Debug.Log ("Cannot find 'HighScoreLeaderboard' script");
 	achievements = GetComponent (Achievements);
 	if (achievements == null) Debug.Log ("Cannot find 'Achievements' script");
 }
 
-function Update() {
-	if (Input.touchCount > 0){
-		var touch : Touch = Input.GetTouch(0);
-		var cursorRay : Ray = Camera.main.ScreenPointToRay(touch.position);
-		var hit : RaycastHit;
-		
-		if (touch.phase == TouchPhase.Moved) {
-			if (!collider.Raycast (cursorRay, hit, 50.0f)) tap = false;
-		} else if (touch.phase == TouchPhase.Ended){
-			if (tap && restartCollider.Raycast(cursorRay, hit, 50.0f)) {
-				Application.LoadLevel("game");
-			} else if (tap && highscoresCollider.Raycast(cursorRay, hit, 50.0f)) {
-				if (highScoreLeaderboard != null)
-					highScoreLeaderboard.ShowLeaderboard();
-			} else if (tap && achievementsCollider.Raycast (cursorRay, hit, 50.0f)) {
-				if (achievements != null)
-					achievements.ShowAchievements ();
-			}
-			tap = true;
-		}
+function OnGUI () {
+	if (GUI.Button (Rect (w, h*2, w, w), restartIcon)) {
+		Application.LoadLevel("game");
+	}
+	if (GUI.Button (Rect (w*3, h*2, w, w), leaderboardsIcon)) {
+		highScoreLeaderboard.ShowLeaderboard();
+	}
+	if (GUI.Button (Rect (w, h*3, w, w), achievementsIcon)) {
+		achievements.ShowAchievements ();
+	}
+	if (GUI.Button (Rect (w*3, h*3, w, w), creditsIcon)) {
+		PlayerPrefs.SetInt("Credits", 0);
+		Application.LoadLevel("credits");
 	}
 }
