@@ -8,19 +8,26 @@ var spawnWait : float;
 var startWait : float;
 var waveWait : float;
 var scoreText : GUIText;
+var highScoreText : GUIText;
+var timeToLvlUp : float;
 
+private var lvl : int = 0;
+private var initTimer : float;
 private var passedHazards : int = 0;
 private var asteroidsInWave : int = 0; // Counting divided asteroids
 private var gameOver : boolean = false;
 private var restart : boolean = false;
 private var score : int = 0;
+private var highScore : int = 0;
 private var asteroidsDestroyed : int = 0;
 private var highScoreLeaderboard : HighScoreLeaderboard;
 private var achievements : Achievements;
 private var proportion : float;
 
 function Start () {
-	Debug.Log("Starting game");
+	if (PlayerPrefs.HasKey("High score")) highScore = PlayerPrefs.GetInt("High score");
+	highScoreText.text = "High Score: "+highScore;
+	scoreText.text = "Score: " + score;
 	highScoreLeaderboard = GetComponent(HighScoreLeaderboard);
 	achievements = GetComponent(Achievements);
 	if (highScoreLeaderboard == null) Debug.Log ("Cannot find 'HighScoreLeaderboard' script");
@@ -29,24 +36,34 @@ function Start () {
 	
 	UpdateScore();
     SpawnWave ();
-    Debug.Log("GameController started");
+    initTimer = timeToLvlUp;
 }
-function Update(){
+
+function Update (){
+
+	if (PlayerPrefs.GetInt("Pause") == 0) timeToLvlUp -= Time.deltaTime;
+	if (timeToLvlUp < 0) {
+		timeToLvlUp = initTimer;
+		lvl += 1;
+	}
+	
 	if (gameOver) StartCoroutine("FinishGame");
 	if (restart) Application.LoadLevel("gameOver");
 }
 
 private var type2Positions : Array = new Array ();
 private var type3Positions : Array = new Array ();
+
 function SpawnWave () {
 	if (gameOver) {
 		restart = true;
 		return;
 	}
 	asteroidsInWave = 0;
-	var lvl : int = Mathf.Floor((score+50)/50);
+	lvl = Mathf.Floor((score+50)/50);
+	PlayerPrefs.SetInt("lvl", lvl);
 	hazardCount = 10 + Mathf.Floor (lvl/10.0);
-	Debug.Log("hazard: "+hazardCount+" lvl: "+lvl);
+	//Debug.Log("hazard: "+hazardCount+" lvl: "+lvl);
 	type2Positions.Clear();
 	type3Positions.Clear();
 	for (var j : int = 1 ; j < Mathf.Floor(hazardCount/2.0) && lvl > 2 ; j++)
@@ -70,9 +87,10 @@ function SpawnWave () {
 		var spawnPosition : Vector3 = Camera.main.ViewportToWorldPoint(vecPos);
 		spawnPosition.y = 0.0f;
 	    var spawnRotation : Quaternion = Quaternion.identity;
-	    if (lvl > 1 && i == nextType2Pos) {
+	    var control : int = lvl-1;
+	    if (control > 1 && i == nextType2Pos) {
 	    	Instantiate (astDiv, spawnPosition, spawnRotation);
-	    	lvl = lvl - 1;
+	    	control = control - 1;
 	    	asteroidsInWave += 3;
 	    	while (nextType2Pos == i && type2Positions.length > 0)
 	    		nextType2Pos = type2Positions.Shift();
@@ -80,7 +98,7 @@ function SpawnWave () {
 	    	Instantiate (astBasic, spawnPosition, spawnRotation);
 	    	asteroidsInWave += 1;
 	    }
-	    if (lvl >= 0 && i == nextType3Pos) {
+	    if (control >= 0 && i == nextType3Pos) {
 	    	if (Random.value >= 0.5) {
 	    		spawnRotation = Quaternion.Euler( Vector3(0, 300, 0));
 	    		spawnPosition = Vector3(-proportion * i, 0.0f, i+4);
@@ -94,6 +112,10 @@ function SpawnWave () {
 	    		nextType3Pos = type3Positions.Shift();
 	    } 
 	}
+}
+
+public function GetLvl () : int {
+	return lvl;
 }
 
 public function AddScore (addScore : int){
@@ -111,22 +133,30 @@ public function PassedHazard (destroyed : boolean, countsAs : int) {
 }
 function UpdateScore () {
 	scoreText.text = "Score: " + score;
+	if (score > highScore) highScoreText.text = "High Score: "+score;
 }
-function IsGameOver (){
+function IsGameOver () {
 	return gameOver;
 }
-function GameOver (){
+function GameOver () {
 	PlayerPrefs.SetInt("Final Score", score);
-	var highScore : int = 0;
-	if (PlayerPrefs.HasKey("High score")) highScore = PlayerPrefs.GetInt("High score");
+	PlayerPrefs.SetInt("lvl", 0);
+	var googleHighScore : int = 0;
+	if (PlayerPrefs.HasKey("GoogleHighScore")) googleHighScore = PlayerPrefs.GetInt("GoogleHighScore");
+	
+	if (score > highScore) {
+		Debug.Log("Score > highscore");
+		PlayerPrefs.SetInt("High score", score);
+		highScore = score;
+	}
 	
 	if (PlayerPrefs.HasKey("Logged")) {
 		if (PlayerPrefs.GetInt("Logged") == 1) {
-			if (score > highScore){
-				if (highScoreLeaderboard != null){ 
-					highScoreLeaderboard.PostHighScore(score);
-					// TODO Check if the Highscore has been submitted, if not try later
-					PlayerPrefs.SetInt("High score", score);
+			if (highScore > googleHighScore){
+				// A lo mejor la puntuacion mas alta no esta en Google, enviamos esa,
+				// no necesariamente la actual, sino la mas alta
+				if (highScoreLeaderboard != null){
+					highScoreLeaderboard.PostHighScore(highScore);
 				}
 			}
 			UnlockAchievements ();
@@ -138,7 +168,10 @@ function GameOver (){
 private var finishing : boolean = false;
 function FinishGame () {
 	if (!finishing) {
-		Debug.Log("Finish it!");
+		if (PlayerPrefs.HasKey("DestAst")) {
+			var destAst : int = PlayerPrefs.GetInt("DestAst")+asteroidsDestroyed;
+			PlayerPrefs.SetInt("DestAst", destAst);
+		} else PlayerPrefs.SetInt("DestAst", asteroidsDestroyed);
 		finishing = true;
 		yield WaitForSeconds (3);
 		Application.LoadLevel("gameOver");
@@ -158,4 +191,7 @@ function UnlockAchievements () {
 		if (asteroidsDestroyed >= 1000) achievements.UnlockSomethingElse();
 	if (asteroidsDestroyed > 0) achievements.IncrementSpaceDuster(asteroidsDestroyed);
 	if (asteroidsDestroyed > 0) achievements.IncrementSpaceSweeper(asteroidsDestroyed);
+	if (asteroidsDestroyed > 0) achievements.IncrementSpaceJanitor(asteroidsDestroyed);
+	if (asteroidsDestroyed > 0) achievements.IncrementSpaceShield(Mathf.Round(asteroidsDestroyed/2));
+	if (asteroidsDestroyed > 0) achievements.IncrementSpaceGuardian(Mathf.Round(asteroidsDestroyed/5));
 }

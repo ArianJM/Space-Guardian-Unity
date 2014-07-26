@@ -10,21 +10,47 @@ class Boundary{
 var shot : GameObject;
 var shotSpawn : Transform;
 var fireRate : float;
+private var lvl : int;
+private var speedLvl : int;
 private var speed : float;
 private var nextFire : float;
 private var pixelHeight : int;
 private var shipMoveMargin : int;
+private var paused : boolean;
 
 function Update() {
-	if (PlayerPrefs.GetInt("Pause") == 1) return;
+	lvl = PlayerPrefs.GetInt("lvl");
+	if (lvl > speedLvl) {
+		speed += 0.07;
+		fireRate -= 0.02;
+		if (fireRate < 0.15) fireRate = 0.15;
+		speedLvl += 7;
+	}
+	if (paused) {
+		nextFire += Time.deltaTime;
+		return;
+	}
 	if (Input.touchCount > 0 && Time.time > nextFire){
 		nextFire = Time.time + fireRate;
 		Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
 	}
 }
+
+function OnEnable () {
+	PauseGame.OnPause += PlayerPaused;
+}
+function OnDisable () {
+	PauseGame.OnPause -= PlayerPaused;
+}
+function PlayerPaused () {
+	if (PlayerPrefs.GetInt("Pause") == 1) paused = true;
+	else paused = false;
+}
+
 function Start() {
-	 pixelHeight = Mathf.RoundToInt(Camera.main.pixelHeight*0.075);
-	 shipMoveMargin = Mathf.RoundToInt(Camera.main.pixelHeight*0.015);
+	paused = false;
+	pixelHeight = Mathf.RoundToInt(Camera.main.pixelHeight*0.075);
+	shipMoveMargin = Mathf.RoundToInt(Camera.main.pixelHeight*0.015);
 	//Scale to a size relative to the screen
 	var scale : Vector3 = (Camera.main.ViewportToWorldPoint(Vector3.one)
 						- Camera.main.ViewportToWorldPoint(Vector3.zero));
@@ -42,9 +68,11 @@ function Start() {
 	var speedFromSize1 : Vector3 = Camera.main.ViewportToWorldPoint(new Vector3(0.0f, 0.0f, 0.0f));
 	var speedFromSize2 : Vector3 = Camera.main.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, 1.0f));
 	speed = Mathf.Abs(speedFromSize1.x) + Mathf.Abs(speedFromSize2.x);
-	Debug.Log(speed);
 
 	initShipBoundary();
+	
+	lvl = PlayerPrefs.GetInt("lvl");
+	speedLvl = 0;
 }
 
 var boundary : Boundary;

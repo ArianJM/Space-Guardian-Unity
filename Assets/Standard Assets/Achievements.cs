@@ -54,17 +54,38 @@ public class Achievements : MonoBehaviour {
 			else Debug.Log ("Could not unlock this is something else");
 		});
 	}
-	public void IncrementSpaceDuster (int astDestroyed) {
+	public void IncrementSpaceDuster (int increment) {
 		((PlayGamesPlatform) Social.Active).IncrementAchievement(
-			"CgkIpuWIg6AaEAIQCQ", astDestroyed, (bool success) => {
-			if (success) Debug.Log ("Space Duster incremented!"+astDestroyed);
+			"CgkIpuWIg6AaEAIQCQ", increment, (bool success) => {
+			if (success) Debug.Log ("Space Duster incremented!"+increment);
 			else Debug.Log ("Could not increment Space Duster");
 		});
 	}
-	public void IncrementSpaceSweeper (int astDestroyed) {
+	public void IncrementSpaceSweeper (int increment) {
 		((PlayGamesPlatform) Social.Active).IncrementAchievement(
-			"CgkIpuWIg6AaEAIQCA", astDestroyed, (bool success) => {
-			if (success) Debug.Log ("Space sweeper incremented! "+astDestroyed);
+			"CgkIpuWIg6AaEAIQCA", increment, (bool success) => {
+			if (success) Debug.Log ("Space sweeper incremented! "+increment);
+			else Debug.Log ("Could not increment Space Sweeper");
+		});
+	}
+	public void IncrementSpaceJanitor (int increment) {
+		((PlayGamesPlatform) Social.Active).IncrementAchievement(
+			"CgkIpuWIg6AaEAIQCg", increment, (bool success) => {
+			if (success) Debug.Log ("Space sweeper incremented! "+increment);
+			else Debug.Log ("Could not increment Space Sweeper");
+		});
+	}
+	public void IncrementSpaceShield (int increment) {
+		((PlayGamesPlatform) Social.Active).IncrementAchievement(
+			"CgkIpuWIg6AaEAIQDA", increment, (bool success) => {
+			if (success) Debug.Log ("Space sweeper incremented! "+increment);
+			else Debug.Log ("Could not increment Space Sweeper");
+		});
+	}
+	public void IncrementSpaceGuardian (int increment) {
+		((PlayGamesPlatform) Social.Active).IncrementAchievement(
+			"CgkIpuWIg6AaEAIQCw", increment, (bool success) => {
+			if (success) Debug.Log ("Space sweeper incremented! "+increment);
 			else Debug.Log ("Could not increment Space Sweeper");
 		});
 	}

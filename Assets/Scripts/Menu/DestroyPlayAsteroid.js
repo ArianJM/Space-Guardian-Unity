@@ -10,7 +10,9 @@ function OnTriggerEnter(other : Collider){
 	if(other.tag == "Boundary") {
 		return;
 	}
-	Instantiate(explosion, transform.position, transform.rotation);
+	var pos : Vector3 = transform.position;
+	pos.x = other.transform.position.x;
+	Instantiate(explosion, pos, transform.rotation);
 	Destroy(other.gameObject);
 	Destroy(gameObject);
 }

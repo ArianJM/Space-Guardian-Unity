@@ -83,7 +83,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 135237155}
   - 114: {fileID: 135237157}
-  - 82: {fileID: 135237156}
   - 114: {fileID: 135237158}
   - 114: {fileID: 135237159}
   m_Layer: 0
@@ -104,64 +103,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!82 &135237156
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 135237153}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 646c72c86ad5a714999776779e66d572, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
+  m_RootOrder: 2
 --- !u!114 &135237157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b852462afd299f4b89ff480f4cf4226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highScoreText: {fileID: 1191846065}
   scoreText: {fileID: 1771146195}
   achievementsIcon: {fileID: 2800000, guid: 365746d8000ff7e48b0e7a5441a953ca, type: 3}
   leaderboardsIcon: {fileID: 2800000, guid: 353156ce213154440871444dc7d752e7, type: 3}
@@ -227,6 +170,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1250508138}
+  m_RootOrder: 0
 --- !u!132 &166263498
 GUIText:
   m_ObjectHideFlags: 0
@@ -301,6 +245,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 1
 --- !u!1 &289906245
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +308,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1621325580}
+  m_RootOrder: 2
 --- !u!1 &447387669
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,8 +376,11 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
   m_HDR: 0
   m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: .0219999999
 --- !u!4 &447387674
 Transform:
   m_ObjectHideFlags: 0
@@ -443,6 +392,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 4
 --- !u!1 &463404321
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +420,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1621325580}
+  m_RootOrder: 0
 --- !u!108 &463404323
 Light:
   m_ObjectHideFlags: 0
@@ -532,6 +483,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1621325580}
+  m_RootOrder: 1
 --- !u!108 &575606058
 Light:
   m_ObjectHideFlags: 0
@@ -567,6 +519,57 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!1 &1191846063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1191846064}
+  - 132: {fileID: 1191846065}
+  m_Layer: 0
+  m_Name: High Score Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1191846064
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1191846063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1250508138}
+  m_RootOrder: 2
+--- !u!132 &1191846065
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1191846063}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: 'High Score:'
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 10, y: -10}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 20
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!1 &1250508137
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +597,9 @@ Transform:
   m_Children:
   - {fileID: 166263497}
   - {fileID: 1771146196}
+  - {fileID: 1191846064}
   m_Father: {fileID: 0}
+  m_RootOrder: 5
 --- !u!1 &1295744351
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,9 +636,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
   m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1295744353
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -652,6 +656,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &1295744355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,6 +697,7 @@ Transform:
   - {fileID: 575606057}
   - {fileID: 289906247}
   m_Father: {fileID: 0}
+  m_RootOrder: 3
 --- !u!1 &1771146194
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,10 +722,10 @@ GUIText:
   m_GameObject: {fileID: 1771146194}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: Score Text
+  m_Text: 'Score:'
   m_Anchor: 0
   m_Alignment: 0
-  m_PixelOffset: {x: 10, y: -10}
+  m_PixelOffset: {x: 10, y: -35}
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -742,3 +748,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1250508138}
+  m_RootOrder: 1

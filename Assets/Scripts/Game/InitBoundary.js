@@ -17,5 +17,5 @@ function Start () {
 }
 
 function OnTriggerExit(other : Collider){
-	Destroy(other.gameObject);
+	if (other.tag != "Player") Destroy(other.gameObject);
 }

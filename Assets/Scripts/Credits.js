@@ -10,3 +10,10 @@ function OnGUI () {
 		else Application.LoadLevel("gameOver");
 	}
 }
+
+function Update(){
+	if (Input.GetKeyDown(KeyCode.Escape)) {
+		if (PlayerPrefs.GetInt("Credits") == 1) Application.LoadLevel("startMenu");
+		else Application.LoadLevel("gameOver");
+	}
+}

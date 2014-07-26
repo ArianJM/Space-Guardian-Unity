@@ -46,6 +46,8 @@ function OnGUI () {
 }
 
 function Update () {
+	if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
+	
 	if (Input.touchCount > 0){
 		var touch : Touch = Input.GetTouch(0);
 		var cursorRay : Ray = Camera.main.ScreenPointToRay(touch.position);
@@ -67,7 +69,8 @@ function Update () {
 
 function StartGame (touch : Touch) {
 	starting = true;
-	//shot.transform.position.x = touch.position.y;
+	Debug.Log(Camera.main.ScreenToViewportPoint(touch.position));
+	shot.transform.position.x = Camera.main.ScreenToWorldPoint(touch.position).x;
 	shot.rigidbody.velocity = transform.forward * 7;
 	shot.audio.Play();
 	yield WaitForSeconds (1);
