@@ -3,9 +3,14 @@
 var shot : GameObject;
 var playAsteroid : GameObject;
 var playGamesIcon : Texture2D;
+var achievementsIcon : Texture2D;
+var leaderboardsIcon : Texture2D;
 var creditsIcon : Texture2D;
+var tooltipStyle : GUIStyle;
 
 private var socialInterface : SocialInterface;
+private var highScoreLeaderboard : HighScoreLeaderboard;
+private var achievements : Achievements;
 private var tap : boolean = true;
 private var moveCamera : MoveCamera;
 private var w : float = Screen.width/5;
@@ -18,6 +23,10 @@ function Start () {
 	if (moveCamera == null) Debug.Log("Cannot find 'MoveCamera' script");
 	socialInterface = GetComponent(SocialInterface);
 	if (socialInterface == null) Debug.Log("Cannot find 'SocialInterface' script");
+	highScoreLeaderboard = GetComponent(HighScoreLeaderboard);
+	if (highScoreLeaderboard == null) Debug.Log ("Cannot find 'HighScoreLeaderboard' script");
+	achievements = GetComponent (Achievements);
+	if (achievements == null) Debug.Log ("Cannot find 'Achievements' script");
 	
 	shot.transform.position = Camera.main.ViewportToWorldPoint(Vector3(0.5f, -0.1f, 0.0f));
 	shot.transform.position.y = 0.0;
@@ -28,20 +37,30 @@ function Start () {
 function OnGUI () {
 	if (!starting) {
 		if (PlayerPrefs.HasKey("Logged") && PlayerPrefs.GetInt("Logged") != 1) {
-			if (GUI.Button (Rect (w, h*3, w, w), playGamesIcon)) {
+			if (GUI.Button (Rect (w, h*3, w, w), GUIContent(playGamesIcon, "Login to Google Play Games"))) {
 				Debug.Log("Login Google Play Games");
 				socialInterface.LogIn ();
 			}
-			if (GUI.Button (Rect (w*3, h*3, w, w), creditsIcon)) {
+			if (GUI.Button (Rect (w*3, h*3, w, w), GUIContent(creditsIcon, "Credits"))) {
 				PlayerPrefs.SetInt("Credits", 1);
 				Application.LoadLevel("credits");
 			}
+			
 		} else {
-			if (GUI.Button (Rect (w*2, h*3, w, w), creditsIcon)) {
+			if (GUI.Button (Rect (w*2, h*4, w, w), GUIContent(creditsIcon, "Credits"))) {
 				PlayerPrefs.SetInt("Credits", 1);
 				Application.LoadLevel("credits");
+			}
+			if (GUI.Button (Rect (w*3, h*3, w, w), GUIContent(leaderboardsIcon, "Leaderboards"))) {
+				Debug.Log("High Score leaderboard");
+				highScoreLeaderboard.ShowHighScoreLeaderboard();
+			}
+			if (GUI.Button (Rect (w, h*3, w, w), GUIContent(achievementsIcon, "Achievements"))) {
+				Debug.Log("Achievements");
+				achievements.ShowAchievements ();
 			}
 		}
+		GUI.Label (Rect (w*2.5,h*5, 0, 0), GUI.tooltip, tooltipStyle);
 	}
 }
 

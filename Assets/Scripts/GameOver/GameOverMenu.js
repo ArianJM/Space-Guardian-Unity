@@ -12,6 +12,8 @@ var achievementsIcon : Texture2D;
 var leaderboardsIcon : Texture2D;
 var creditsIcon : Texture2D;
 var restartIcon : Texture2D;
+var tooltipStyle : GUIStyle;
+
 
 function Start () {
 	score = PlayerPrefs.GetInt("Final Score");
@@ -28,17 +30,18 @@ function Update(){
 }
 
 function OnGUI () {
-	if (GUI.Button (Rect (w, h*2, w, w), restartIcon)) {
+	if (GUI.Button (Rect (w, h*2, w, w), GUIContent(restartIcon, "Restart"))) {
 		Application.LoadLevel("game");
 	}
-	if (GUI.Button (Rect (w*3, h*2, w, w), leaderboardsIcon)) {
+	if (GUI.Button (Rect (w*3, h*2, w, w), GUIContent(leaderboardsIcon, "Leaderboards"))) {
 		highScoreLeaderboard.ShowHighScoreLeaderboard();
 	}
-	if (GUI.Button (Rect (w, h*3, w, w), achievementsIcon)) {
+	if (GUI.Button (Rect (w, h*3, w, w), GUIContent(achievementsIcon, "Achievements"))) {
 		achievements.ShowAchievements ();
 	}
-	if (GUI.Button (Rect (w*3, h*3, w, w), creditsIcon)) {
+	if (GUI.Button (Rect (w*3, h*3, w, w), GUIContent(creditsIcon, "Credits"))) {
 		PlayerPrefs.SetInt("Credits", 0);
 		Application.LoadLevel("credits");
 	}
+	GUI.Label (Rect (w*2.5,h*5, 0, 0), GUI.tooltip, tooltipStyle);
 }

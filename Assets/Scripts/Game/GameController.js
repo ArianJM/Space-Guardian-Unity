@@ -62,13 +62,13 @@ function SpawnWave () {
 	asteroidsInWave = 0;
 	lvl = Mathf.Floor((score+50)/50);
 	PlayerPrefs.SetInt("lvl", lvl);
-	hazardCount = 10 + Mathf.Floor (lvl/10.0);
-	//Debug.Log("hazard: "+hazardCount+" lvl: "+lvl);
+	hazardCount = 10 + Mathf.Floor (lvl/7.0);
+	Debug.Log("hazard: "+hazardCount+" lvl: "+lvl+" hazard/4: "+Mathf.Floor(hazardCount/5));
 	type2Positions.Clear();
 	type3Positions.Clear();
 	for (var j : int = 1 ; j < Mathf.Floor(hazardCount/2.0) && lvl > 2 ; j++)
 		type2Positions.Push(Mathf.Floor(Random.Range(0.0f, hazardCount*0.3)));
-	for (var k : int = 1 ; k < Mathf.Floor(hazardCount/5.0) && lvl > 10 ; k++)
+	for (var k : int = 1 ; k < Mathf.Floor(hazardCount/4.0) && lvl > 10 ; k++)
 		type3Positions.Push(Mathf.Floor(Random.Range(2.0f, hazardCount*0.7)));
 
 	if (type2Positions.length > 1) {

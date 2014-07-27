@@ -1078,6 +1078,8 @@ GameObject:
   - 4: {fileID: 1646620945}
   - 114: {fileID: 1646620944}
   - 114: {fileID: 1646620943}
+  - 114: {fileID: 1646620947}
+  - 114: {fileID: 1646620946}
   m_Layer: 0
   m_Name: MenuController
   m_TagString: Untagged
@@ -1099,7 +1101,68 @@ MonoBehaviour:
   shot: {fileID: 444932355}
   playAsteroid: {fileID: 1461700108}
   playGamesIcon: {fileID: 2800000, guid: 92d17e3a48fef1e40bd438d3154de742, type: 3}
+  achievementsIcon: {fileID: 2800000, guid: 365746d8000ff7e48b0e7a5441a953ca, type: 3}
+  leaderboardsIcon: {fileID: 2800000, guid: 353156ce213154440871444dc7d752e7, type: 3}
   creditsIcon: {fileID: 2800000, guid: accbe68c2b34a9a40a0172398273aa9b, type: 3}
+  tooltipStyle:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 1, g: 1, b: 1, a: .784313738}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 10
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 0}
+    m_FontSize: 25
+    m_FontStyle: 0
+    m_Alignment: 7
+    m_WordWrap: 0
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
 --- !u!114 &1646620944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,6 +1186,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &1646620946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1646620942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa284cdd6c08744e9c12c587b4bcd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1646620947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1646620942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d445149b8ba25e4fb00697f3947049f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1661921614
 GameObject:
   m_ObjectHideFlags: 0
